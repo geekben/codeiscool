@@ -1,4 +1,4 @@
 codeiscool
 ==========
 
-little cool code solve little problems
+little cool code solves little problems
