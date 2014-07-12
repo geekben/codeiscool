@@ -1,19 +1,23 @@
+import heapq
 
 try:
     input = raw_input
 except NameError:
     pass
 
-def swm(array, winw):
-    sumw = 0
-    for i in range(winw):
-        sumw += array[i]
-    maxw = sumw
-    for i in range(len(array)-winw):
-        sumw += array[i+winw] - array[i]
-        if sumw > maxw:
-            maxw = sumw
-    return maxw
+def swm(array, w):
+    pairs = []
+    B = []
+    for i in range(w):
+        pairs.append([-array[i],i])
+    heapq.heapify(pairs)
+    for i in range(len(array)-w+1):
+        B.append(-pairs[0][0])
+        if i+w < len(array):
+            heapq.heappush(pairs, [-array[i+w],i+w])
+            while pairs[0][1] <= i:
+                heapq.heappop(pairs)
+    return B
 
 def main():
     array_raw = input("input an array separated by ',':")
