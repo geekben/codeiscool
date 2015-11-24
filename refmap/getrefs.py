@@ -11,6 +11,7 @@ def main(argv):
             data=myfile.read().replace('\n', ' ')
      
     data = re.sub('\([^\(]*\)','',data)
+    data = re.sub('- +','',data)
     lines = re.split('([^ ][^ ]\.) ', data)
     newlines = []
     end = len(lines)
@@ -18,6 +19,10 @@ def main(argv):
         if i+1<end: newlines.append(lines[i]+lines[i+1])
         else: newlines.append(lines[i])
 
-    print '\n'.join(newlines)
+    for i,line in enumerate(newlines):
+        if re.search(', [a-zA-Z]\. ',line):
+            newlines[i] = '\n' + line
+
+    print ''.join(newlines)
 
 if __name__ == '__main__': sys.exit(main(sys.argv))
