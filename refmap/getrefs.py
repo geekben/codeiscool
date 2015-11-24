@@ -10,6 +10,7 @@ def main(argv):
     with open ("/tmp/refs.txt", "r") as myfile:
             data=myfile.read().replace('\n', ' ')
      
+    data = re.sub('\([^\(]*\)','',data)
     lines = re.split('([^ ][^ ]\.) ', data)
     newlines = []
     end = len(lines)
