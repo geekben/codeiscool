@@ -12,9 +12,9 @@ def main(argv):
     os.popen(cmd)
     with open ("/tmp/refs.txt", "r") as myfile:
         data=myfile.read()
-        data = re.sub('^[0-9]+$','',data)
-        data.replace('\n', ' ')
      
+    data = re.sub('^[0-9]+$','',data)
+    data.replace('\n', ' ')
     data = re.sub('\([^\(]*\)','',data)#(xxx)
     data = re.sub('- +','',data)#compu- tor
     #fix the error like ...end.Begin... and excluding the url
@@ -28,6 +28,8 @@ def main(argv):
         if re.search('[A-Z][a-z]+, [a-zA-Z]\.',line):
             lines[i] = '\n' + line
 
-    print ''.join(lines)
+    data = ''.join(lines)
+    data = re.sub(' +\.','. ',data)
+    print data
 
 if __name__ == '__main__': sys.exit(main(sys.argv))
