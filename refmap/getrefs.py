@@ -8,21 +8,23 @@ import os
 def main(argv):
     #os.popen("sed '0,/^References/ d' "+argv[1]+" > /tmp/refs.txt")
     with open ("/tmp/refs.txt", "r") as myfile:
-            data=myfile.read().replace('\n', ' ')
+        data=myfile.read()
+        data = re.sub('^[0-9]+$','',data)
+        data.replace('\n', ' ')
      
-    data = re.sub('\([^\(]*\)','',data)
-    data = re.sub('- +','',data)
-    lines = re.split('([^ ][^ ]\.) ', data)
-    newlines = []
-    end = len(lines)
-    for i in range(0,end,2):
-        if i+1<end: newlines.append(lines[i]+lines[i+1])
-        else: newlines.append(lines[i])
+    data = re.sub('\([^\(]*\)','',data)#(xxx)
+    data = re.sub('- +','',data)#compu- tor
+    #fix the error like ...end.Begin... and excluding the url
+    data = re.sub(r'([a-zA-Z]+)\.([A-Z][a-z]*)',r'\1. \2',data)
+    #data = re.sub(' +\.','.',data)
+    data = re.sub(r'([^ ][^ ]\.) ',r'\1\n',data)
 
-    for i,line in enumerate(newlines):
-        if re.search(', [a-zA-Z]\. ',line):
-            newlines[i] = '\n' + line
+    lines = re.split('\n', data)
 
-    print ''.join(newlines)
+    for i,line in enumerate(lines):
+        if re.search('[A-Z][a-z]+, [a-zA-Z]\.',line):
+            lines[i] = '\n' + line
+
+    print ''.join(lines)
 
 if __name__ == '__main__': sys.exit(main(sys.argv))
