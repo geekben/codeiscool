@@ -4,9 +4,12 @@ import sys
 import re
 import os
 
+#Prerequisite: pdfminer installed
+#Usage: python <thisfile> <a pdf thesis>
 # main
 def main(argv):
-    #os.popen("sed '0,/^References/ d' "+argv[1]+" > /tmp/refs.txt")
+    cmd = "pdf2txt.py "+argv[1]+"|sed '0,/^References/ d' > /tmp/refs.txt"
+    os.popen(cmd)
     with open ("/tmp/refs.txt", "r") as myfile:
         data=myfile.read()
         data = re.sub('^[0-9]+$','',data)
