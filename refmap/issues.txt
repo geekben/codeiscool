@@ -1,0 +1,3 @@
+getrefs.py need to adapt to more kinds of reference format
+freecite has its python wrapper, but still has some bug
+pdf2txt cannot work properly encounterring a horizontal separation in one page
