@@ -1,3 +1,8 @@
-getrefs.py need to adapt to more kinds of reference format
-freecite has its python wrapper, but still has some bug
-pdf2txt cannot work properly encounterring a horizontal separation in one page
+[solved] getrefs.py need to adapt to more kinds of reference format
+    now adapt to the '[1] B. Luo xxxx' references.
+[solved] freecite has its python wrapper, but still has some bug
+    fix the bug and create a pull request: https://github.com/ravenscroftj/freecite/pull/2
+[solved] pdf2txt cannot work properly encounterring a horizontal separation in one page
+    a lot affort (last three commits), but it works now!
+ 
+ call freecite to parse the references and store results to db
