@@ -4,6 +4,7 @@ import sys
 import re
 import os
 import pdfparser as par
+import freecite
 
 #Prerequisite: pdfminer installed
 #Usage: python <thisfile> <a pdf thesis>
@@ -33,6 +34,10 @@ def main(argv):
 
     data = ''.join(lines)
     data = re.sub(' +\.','. ',data)
-    print data
+    newlines = data.split('\n')[1:]
+
+    c = freecite.Client()
+    citations = c.parse_many(newlines)
+    print citations
 
 if __name__ == '__main__': sys.exit(main(sys.argv))

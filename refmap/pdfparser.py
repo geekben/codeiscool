@@ -32,7 +32,7 @@ class RefsExtractor(TextConverter):
             if isinstance(item, LTTextBox):
                 if re.search(r'^\[[0-9]+\] ',self.text) or \
                    re.search(r'[^ ]\[[0-9]+\] ',self.text) or \
-                   re.search(r'^[A-Z][a-z]+, [a-zA-Z]\.',self.text):
+                   re.search(r'[A-Z][a-z]+, [a-zA-Z]\.',self.text):
                     TextConverter.write_text(self,self.text)
                 TextConverter.write_text(self,'\n')
                 self.text = ''
