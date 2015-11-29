@@ -3,13 +3,15 @@
 import sys
 import re
 import os
+import pdfparser as par
 
 #Prerequisite: pdfminer installed
 #Usage: python <thisfile> <a pdf thesis>
 # main
 def main(argv):
-    cmd = "pdf2txt.py "+argv[1]+"|sed '0,/^References/ d' > /tmp/refs.txt"
-    os.popen(cmd)
+    #cmd = "pdf2txt.py "+argv[1]+"|sed '0,/^References/ d' > /tmp/refs.txt"
+    #os.popen(cmd)
+    par.extractrefs(argv[1],"/tmp/refs.txt")
     with open ("/tmp/refs.txt", "r") as myfile:
         data=myfile.read()
      
@@ -25,7 +27,8 @@ def main(argv):
     lines = re.split('\n', data)
 
     for i,line in enumerate(lines):
-        if re.search('[A-Z][a-z]+, [a-zA-Z]\.',line):
+        if re.search('[A-Z][a-z]+, [a-zA-Z]\.',line) or \
+           re.search('^\[[0-9]+\] ',line):
             lines[i] = '\n' + line
 
     data = ''.join(lines)
