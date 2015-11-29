@@ -34,7 +34,7 @@ class RefsExtractor(TextConverter):
             elif isinstance(item, LTText):
                 self.text += item.get_text()
             if isinstance(item, LTTextBox):
-                if re.search(r'^\[[0-9]+\] ',self.text) or \
+                if re.search(r'\[[0-9]+\] ',self.text) or \
                    re.search(r'^[A-Z][a-z]+, [a-zA-Z]\.',self.text):
                     TextConverter.write_text(self,self.text)
                 TextConverter.write_text(self,'\n')
@@ -50,6 +50,7 @@ class RefsExtractor(TextConverter):
 
 rsrcmgr = PDFResourceManager()
 laparams = LAParams()
+laparams.line_margin = 1.4
 device = RefsExtractor(rsrcmgr, outfp, laparams=laparams)
 interpreter = PDFPageInterpreter(rsrcmgr, device)
 for page in PDFPage.get_pages(infp, pagenos,
