@@ -35,6 +35,8 @@ def main(argv):
 
     data = ''.join(lines)
     data = re.sub(' +\.','. ',data)
+    #fix the error like ...end.Begin... and excluding the url
+    data = re.sub(r'([a-zA-Z]+)\.([A-Z][a-z]*)',r'\1. \2',data)
     newlines = data.split('\n')[1:]
 
     c = freecite.Client()
