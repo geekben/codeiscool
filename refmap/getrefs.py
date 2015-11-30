@@ -17,6 +17,7 @@ def main(argv):
         data=myfile.read()
      
     data = re.sub('^[0-9]+$','',data)
+    data = re.sub('-\n','',data)
     data.replace('\n', ' ')
     data = re.sub('\([^\(]*\)','',data)#(xxx)
     data = re.sub('- +','',data)#compu- tor
