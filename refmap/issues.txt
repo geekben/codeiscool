@@ -4,7 +4,7 @@
     fix the bug and create a pull request: https://github.com/ravenscroftj/freecite/pull/2
 [solved] pdf2txt cannot work properly encounterring a horizontal separation in one page
     a lot affort (last three commits), but it works now!
- call freecite to parse the references and store results to db
+[solved] call freecite to parse the references and store results to db
     database: MySQL: db: citationsdb user: citations@localhost table: citations password: ***
     CITAIONS:
     mysql> describe citations;
@@ -26,3 +26,4 @@
     11 rows in set (0.00 sec)
     * booktitle here also means conference
 
+result is not good at all; now try to use pdf2htmlEX, but ecounterred a set of installation issues;
