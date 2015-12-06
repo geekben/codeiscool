@@ -26,4 +26,7 @@
     11 rows in set (0.00 sec)
     * booktitle here also means conference
 
-result is not good at all; now try to use pdf2htmlEX, but ecounterred a set of installation issues;
+[defer] result is not good at all; now try to use pdf2htmlEX, but ecounterred a set of installation issues;
+
+try PDFbox
+
