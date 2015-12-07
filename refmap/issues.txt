@@ -28,7 +28,11 @@
 
 [defer] result is not good at all; now try to use pdf2htmlEX, but ecounterred a set of installation issues;
 
-try PDFbox
+[solved] try PDFbox
     1) write a java wrapper of PDFbox for text extraction
     2) call the wrapper by subprocess.call in python
+
+need to refine the code for using PDFBox:
+    1) make java program take in args from stdin
+    2) combine the new method into getrefs
 
