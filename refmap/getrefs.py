@@ -4,7 +4,7 @@
 import sys
 import re
 import os
-import pdfparser as par
+#import pdfparser as par
 import freecite
 import MySQLdb as mdb
 
@@ -14,7 +14,10 @@ import MySQLdb as mdb
 def main(argv):
     #cmd = "pdf2txt.py "+argv[1]+"|sed '0,/^References/ d' > /tmp/refs.txt"
     #os.popen(cmd)
-    par.extractrefs(argv[1],"/tmp/refs.txt")
+    #par.extractrefs(argv[1],"/tmp/refs.txt")
+    cmd = "cd ExtractTxtByPDFbox; java -cp '.:pdfbox-app-2.0.0-RC2.jar' Pdf2txt "+ \
+          argv[1]+" > /tmp/refs.txt; cd ../"
+    os.popen(cmd)
     with open ("/tmp/refs.txt", "r") as myfile:
         data=myfile.read()
 
