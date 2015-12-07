@@ -1,0 +1,5 @@
+1) download the newest jar file from https://pdfbox.apache.org/download.cgi
+2) compile:
+    javac -cp '.:pdfbox-app-2.0.0-RC2.jar' Pdf2txt.java PDFManager.java
+3) run:
+    java -cp '.:pdfbox-app-2.0.0-RC2.jar' Pdf2txt
