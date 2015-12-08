@@ -32,7 +32,14 @@
     1) write a java wrapper of PDFbox for text extraction
     2) call the wrapper by subprocess.call in python
 
-need to refine the code for using PDFBox:
+[solved] need to refine the code for using PDFBox:
     1) make java program take in args from stdin
     2) combine the new method into getrefs
 
+need to deal with the 'Proc.' issue, that is not an end of a sentence
+    1) add semantic analysis or
+    2) use some patterns those citations use a lot.
+
+keep the txt extracted from pdf
+
+add cited_by field to citation's record
