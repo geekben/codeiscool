@@ -64,7 +64,11 @@ def main(argv):
             authors = ['','','','','']
             if i['title'] == '':
                 continue
-            for j in range(len(i['authors'])):
+            if len(i['authors']) > 5:
+                num_author = 5
+            else:
+                num_author = len(i['authors'])
+            for j in range(num_author):
                 authors[j] = i['authors'][j]
             print "insert citations values(0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"% \
                        (i['title'],i['booktitle'],i['journal'],i['volume'],i['pages'],
