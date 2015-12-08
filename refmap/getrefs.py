@@ -41,7 +41,8 @@ def main(argv):
 
     for idx,line in enumerate(lines):
         if re.search('[A-Z][a-z]+, [a-zA-Z]\.',line) or \
-           re.search('^\[[0-9]+\] ',line):
+           re.search('^\[[0-9]+\] ',line) or \
+           re.search('^\[[a-zA-Z]+[0-9]+\] ',line):
             lines[idx] = '\n' + line
 
     data = ''.join(lines)
