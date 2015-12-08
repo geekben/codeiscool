@@ -22,6 +22,7 @@
     | author3   | varchar(50)  | YES  |     | NULL    |                |
     | author4   | varchar(50)  | YES  |     | NULL    |                |
     | author5   | varchar(50)  | YES  |     | NULL    |                |
+    | citedby   | varchar(150) | NO   |     | NULL    |                |
     +-----------+--------------+------+-----+---------+----------------+
     11 rows in set (0.00 sec)
     * booktitle here also means conference
@@ -40,6 +41,6 @@ need to deal with the 'Proc.' issue, that is not an end of a sentence
     1) add semantic analysis or
     2) use some patterns those citations use a lot.
 
-keep the txt extracted from pdf
+[solved] keep the txt extracted from pdf
 
 add cited_by field to citation's record

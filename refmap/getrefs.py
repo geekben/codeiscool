@@ -32,7 +32,10 @@ def main(argv):
     #fix the error like ...end.Begin... and excluding the url
     data = re.sub(r'([a-zA-Z0-9]+)\.([A-Z][a-z]*)',r'\1. \2',data)
     #data = re.sub(' +\.','.',data)
+    data = re.sub('Proc\.',' Proceeding ',data)
+    data = re.sub('Intl\.',' International ',data)
     data = re.sub(r'([^ ][^ ]\.) ',r'\1\n',data)
+    data = re.sub(r'([^ ][^ ];)',r'\1\n',data)
 
     lines = re.split('\n', data)
 
@@ -61,12 +64,12 @@ def main(argv):
             authors = ['','','','','']
             for j in range(len(i['authors'])-1):
                 authors[j] = i['authors'][j]
-            print "insert citations values('',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"% \
+            print "insert citations values(0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"% \
                        (i['title'],i['booktitle'],i['journal'],i['volume'],i['pages'],
-                        authors[0], authors[1], authors[2], authors[3], authors[4])
-            cur.execute("insert citations values(0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                        authors[0], authors[1], authors[2], authors[3], authors[4], argv[1])
+            cur.execute("insert citations values(0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                        (i['title'],i['booktitle'],i['journal'],i['volume'],i['pages'],
-                        authors[0], authors[1], authors[2], authors[3], authors[4]))
+                        authors[0], authors[1], authors[2], authors[3], authors[4], argv[1]))
 
 
 if __name__ == '__main__': sys.exit(main(sys.argv))
