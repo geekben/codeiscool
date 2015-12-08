@@ -62,6 +62,8 @@ def main(argv):
         cur.execute('SET character_set_connection=utf8;')
         for i in citations:
             authors = ['','','','','']
+            if i['title'] == '':
+                continue
             for j in range(len(i['authors'])-1):
                 authors[j] = i['authors'][j]
             print "insert citations values(0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"% \
