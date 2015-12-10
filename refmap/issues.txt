@@ -37,10 +37,10 @@
     1) make java program take in args from stdin
     2) combine the new method into getrefs
 
-need to deal with the 'Proc.' issue, that is not an end of a sentence
+[solved] need to deal with the 'Proc.' issue, that is not an end of a sentence
     1) add semantic analysis or
     2) use some patterns those citations use a lot.
 
 [solved] keep the txt extracted from pdf
 
-add cited_by field to citation's record
+[solved] add cited_by field to citation's record
