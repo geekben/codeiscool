@@ -36,6 +36,7 @@ def main(argv):
     data = re.sub('Intl\.',' International ',data)
     data = re.sub(r'([^ ][^ ]\.) ',r'\1\n',data)
     data = re.sub(r'([^ ][^ ];)',r'\1\n',data)
+    data = re.sub(r'  +',' ',data)
 
     lines = re.split('\n', data)
 
