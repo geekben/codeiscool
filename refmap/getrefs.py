@@ -18,9 +18,10 @@ def main(argv):
     if len(argv) != 2:
         print "Usage: python <thisfile> <a pdf thesis>"
         exit()
-    cmd = "cd ExtractTxtByPDFbox; java -cp '.:pdfbox-app-2.0.0-RC2.jar' Pdf2txt "+ \
-          argv[1]+" > "+argv[1]+".txt; cd ../"
-    os.popen(cmd)
+    if not os.path.isfile(argv[1]+".txt"):
+        cmd = "cd ExtractTxtByPDFbox; java -cp '.:pdfbox-app-2.0.0-RC2.jar' Pdf2txt "+ \
+              argv[1]+" > "+argv[1]+".txt; cd ../"
+        os.popen(cmd)
     with open (argv[1]+".txt", "r") as myfile:
         data=myfile.read()
 
