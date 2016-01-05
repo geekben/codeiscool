@@ -12,11 +12,20 @@
     </style>
     <script src="jquery-1.11.1.js"></script>
     <script>
+        function init_animated(){
+            $(".current li").each(function(){
+                var text = $(this).text();
+                var _lable = $("<div style='right:20px;top:0px;opacity:1;color:"+getRandomColor()+";'>"+text+"</div>");
+                $(".mask").append(_lable.show());
+            });
+            init_barrage();
+        }
+
         $(function(){
             $(".showBarrage,.s_close").click(function(){
                 $(".barrage,.s_close").toggle("slow");
             });
-            //init_animated();
+            init_animated();
         })
         //提交评论
         function shoot(){
@@ -70,6 +79,11 @@
                 <!--内容在这里显示-->
             </div>
         </div>
+        <div class="current" style="display:none">
+            <li>poyao</li>
+            <li>jiye</li>
+        </div>
+
         <!--Send Begin-->
         <div class="send">
             <input type="text" class="s_text"/>
