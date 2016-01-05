@@ -47,12 +47,9 @@
                 if(_top >= (_height -130)){
                     _top = 0;
                 }
-                $(this).css({left:_left,top:_top,color:getRandomColor()});
+                $(this).css({left:_left,top:_top});
                 //定时弹出文字
-                var time = 10000;
-                if($(this).index() % 2 == 0){
-                    time = 15000;
-                }
+                var time = 100000 + Math.random() * 100000;
                 $(this).animate({left:"-"+_left+"px"},time,function(){
                     $(this).remove();
                 });
