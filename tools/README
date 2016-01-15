@@ -1,0 +1,5 @@
+memtest.c
+    test memory perfromance
+multithread_memops.c
+    for flush TLB IPI test
+    gcc -phthread multithread_memops.c
