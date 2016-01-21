@@ -11,6 +11,20 @@ Ben Luo
 static int pid = -1;
 module_param(pid, int, S_IRUGO);
 
+static void printbinary(unsigned long x, int nbits)
+{
+    unsigned char buf[nbits+1];
+    unsigned long mask = 1UL << (nbits - 1);
+    int i = 0;
+    while (mask != 0) {
+        buf[i++] = (mask & x ? '1' : '0');
+        mask >>= 1;
+    }
+    buf[i] = '\0';
+
+    printk("%s", buf);
+}
+
 static int bad_address(void *p)
 {
     unsigned long dummy;
@@ -23,6 +37,7 @@ static void dump_pagetable(unsigned long address, pgd_t * pgd)
     pud_t *pud;
     pmd_t *pmd;
     pte_t *pte;
+    unsigned long pte_v;
 
     if (bad_address(pgd))
         goto bad;
@@ -52,7 +67,9 @@ static void dump_pagetable(unsigned long address, pgd_t * pgd)
     if (bad_address(pte))
         goto bad;
 
-    printk("PTE %lx", pte_val(*pte));
+    pte_v = pte_val(*pte);
+    printk("PTE %lx|", pte_v&~(PAGE_SIZE-1));
+    printbinary(pte_v, 8);
 out:
     printk("\n");
     return;
