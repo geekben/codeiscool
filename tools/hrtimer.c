@@ -11,9 +11,17 @@ static struct hrtimer hr_timer;
 
 enum hrtimer_restart my_hrtimer_callback( struct hrtimer *timer )
 {
-  printk( "my_hrtimer_callback called (%ld).\n", jiffies );
+  ktime_t ktime;
+  unsigned long delay_in_ms = 200L;
 
-  return HRTIMER_NORESTART;
+  printk( "my_hrtimer_callback called (%ld).\n", jiffies );
+  ktime = ktime_set( 0, MS_TO_NS(delay_in_ms) );
+  hrtimer_forward_now(timer, ktime);
+
+  if (count++ < 5)
+    return HRTIMER_RESTART;
+  else
+    return HRTIMER_NORESTART;
 }
 
 int init_module( void )
