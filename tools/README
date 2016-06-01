@@ -3,3 +3,6 @@ memtest.c
 multithread_memops.c
     for flush TLB IPI test
     gcc -phthread multithread_memops.c
+
+hrtimer.c
+    a kernel module of hrtimer example
