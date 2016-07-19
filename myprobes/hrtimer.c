@@ -8,6 +8,7 @@ MODULE_LICENSE("GPL");
 #define MS_TO_NS(x) (x * 1E6L)
 
 static struct hrtimer hr_timer;
+static int count = 0;
 
 enum hrtimer_restart my_hrtimer_callback( struct hrtimer *timer )
 {
