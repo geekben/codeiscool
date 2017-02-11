@@ -1,3 +1,5 @@
+# https://community.topcoder.com/stat?c=problem_solution&cr=10574855&rd=16187&pm=13268
+
 class ZooExchangeProgram:
     def getNumber(self, label, lower, upper):
         l = list(label)
@@ -23,42 +25,47 @@ class ZooExchangeProgram:
                 ng.append(i)
 
         # tricky part:
+        count = [0] * 50
         state = {0:0}
         mode = []
+        musk = 0
+        ret = 0
 
         for i in ng:
-            temp = 0
             for j in i:
+                count[j] += 1
+        for i in ng:
+            temp = 0
+            only = False
+            for j in i:
+                if count[j] == 1:
+                    only = True
                 temp += 1<<(j-1)
-            mode.append(temp)
-            state[temp] = 1
+            if not only:
+                mode.append(temp)
+                state[temp] = 1
+            else:
+                musk |= temp
+                ret += 1
 
+        if musk == (1<<upper)-(1<<(lower-1)):
+            return ret
+
+        best = 50
         for m in mode:
             for i in state.keys():
                 state[i|m] = min(state.get(i|m,50), state.get(i,50)+1)
-        return state[(1<<upper)-(1<<(lower-1))]
+                if musk|i|m  == (1<<upper)-(1<<(lower-1)):
+                   best = min(best, ret+state[i|m])
+
+        return best
 
 if __name__ == "__main__":
-    '''
-    label = [7, 12, 2, 12, 10, 13, 6, 5, 3, 3, 4, 11, 12, 4, 3, 1, 8, 11, 4, 7, 6, 5, 47]
-    print ZooExchangeProgram().getNumber(label, 2, 7)
-    label2 = [7, 12, 2, 12, 10, 13, 6, 5, 3, 3, 4, 11, 12, 4, 3, 1, 8, 11, 4, 7, 6, 5, 47, 7, 22, 4, 3, 1, 8, 22, 2, 6, 22, 3, 4, 8, 1]
-    print ZooExchangeProgram().getNumber(label2, 2, 7)
-    label3 = [3, 4, 3, 1, 6, 2, 5, 7, 5, 2]
-    print ZooExchangeProgram().getNumber(label3, 2, 6)
-    label4 = [2, 1, 3]
-    print ZooExchangeProgram().getNumber(label4, 1, 3)
-    label5 = [3, 4, 1, 3, 4, 2]
-    print ZooExchangeProgram().getNumber(label5, 1, 3)
-    label6 = [2, 1, 3, 1, 4]
-    print ZooExchangeProgram().getNumber(label6, 1, 4)
-    label7 = [3, 1, 4]
-    print ZooExchangeProgram().getNumber(label7, 2, 4)
-    '''
-    label8 = [15, 4, 16, 11, 17, 1, 18, 11, 19, 6, 20, 4, 21, 6, 22, 11, 23, 9, 24, 4, 25, 46, 26, 1, 27, 14, 28, 1, 29, 6, 30, 13, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]
-    print ZooExchangeProgram().getNumber(label8, 15, 42)
+    label = [12, 38, 13, 38, 14, 1, 15, 37, 16, 6, 17, 8, 18, 5, 19, 8, 20, 11, 21, 35, 22, 8, 23, 1, 24, 9, 25, 37, 26, 6, 27, 2, 28, 36, 29, 46, 30, 38, 31, 35, 32, 43, 33, 34]
+    print ZooExchangeProgram().getNumber(label, 12, 34)
+    label = [10, 44, 46, 9, 42, 32, 47, 7, 43, 41, 6, 33, 2, 41, 24, 15, 10, 23, 40, 16, 7, 40, 21, 47, 47, 47, 42, 27, 44, 37, 1, 8, 47, 29, 46, 46, 34, 44, 40, 45, 37, 47, 46, 4]
+    print ZooExchangeProgram().getNumber(label, 40, 47)
 
-    '''
     import re
 
     with open('testcases') as f:
@@ -71,7 +78,3 @@ if __name__ == "__main__":
                 print para,"SUCCESS"
             else:
                 print para,"FAIL",ret
-    '''
-
-
-
