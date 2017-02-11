@@ -1,3 +1,4 @@
+# http://www.luo666.com/?p=120
 # https://community.topcoder.com/stat?c=problem_solution&cr=10574855&rd=16187&pm=13268
 
 class ZooExchangeProgram:
