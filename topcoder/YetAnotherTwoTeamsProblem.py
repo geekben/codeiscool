@@ -1,51 +1,22 @@
+# http://www.luo666.com/?p=129
+# system test failed, but has passed all testcases from
+# https://community.topcoder.com/stat?c=problem_solution&cr=23159180&rd=15703&pm=12750
 class YetAnotherTwoTeamsProblem:
     def count(self, skill):
         ss = 0
         for i in skill:
             ss += i
-        #skill.sort()
-        mask = (1 << len(skill)) - 1
-        stat = {0:0}
-        sm = {0:100000}
-        su = {}
+        sm = ss/2
+        skill.sort(reverse=True)
+        stat = {0:1}
         c = 0
-        for idx,s in enumerate(skill):
-            i = 1<<(idx+1)
-            for j in stat.keys():
-                n = i|j
-                if i == j or stat[j] < 0 or stat.get(n, 1) < 0:
-                    continue
-
-                temp = s + stat[j]
-                sm[n] = min(sm[j], s)
-                h = su.get(temp, {}).get(sm[n], 0)
-                stat[n] = temp
-                if h != 0:
-                    if h == -2:
-                        c += 1
-                        stat[mask^n] = -1
-                    elif h == -1:
-                        stat[mask^n] = -1
-                    continue
-
-                d = ss - temp
-                if temp < d:
-                    stat[n] = temp
-                elif temp == d:
-                    stat[n] = -1
-                    stat[mask^n] = -1
-                else:
-                    if temp - d < sm[n]*2:
-                        stat[n] = -2
-                        stat[mask^n] = -1
-                        c += 1
-                    else:
-                        stat[n] = -1
-                ht = su.get(temp, {})
-                if ht == {}:
-                    su[temp] = {sm[n]:stat[n]}
-                else:
-                    ht[sm[n]] = stat[n]
+        for i in skill:
+            for j in range(sm-i+1, sm+1):
+                t = i+j
+                if (j == 0 or j >= i) and t > ss-t and j < ss-j:
+                    c += stat.get(j, 0)
+            for j in range(sm+i, i-1, -1):
+                stat[j] = stat.get(j, 0) + stat.get(j-i, 0)
 
         return c
 
