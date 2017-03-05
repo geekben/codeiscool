@@ -5,9 +5,15 @@ class YetAnotherRobotSimulation:
         px = tuple(x)
         py = tuple(y)
         tl = len(px)
+        '''
         tp = []
         for i in range(0, tl):
             tp.append((px[i],py[i]))
+        '''
+
+        tp = {}
+        for i in range(0, tl):
+            tp[(px[i],py[i])] = True
 
         c = [] 
         # quick search table for number of combinations
@@ -35,7 +41,8 @@ class YetAnotherRobotSimulation:
                         for pr in range(0,r+1):
                             for pl in range(0,l+1):
                                 for pd in range(0,d+1):
-                                    if (pr-pl, pu-pd) in tp:
+                                    #if (pr-pl, pu-pd) in tp:
+                                    if tp.get((pr-pl, pu-pd), False):
                                         s += c[u][pu]*c[r][pr]*c[l][pl]*c[d][pd]
                                         m = max(s, m)
 
