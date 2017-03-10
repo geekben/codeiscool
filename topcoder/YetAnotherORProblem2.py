@@ -2,9 +2,11 @@ class YetAnotherORProblem2:
     def countSequences(self, n, r):
         ls = {0:1}
         c = 0
-        mc = 0
-        while (1<<mc) < r:
-            mc += 1
+        mc = 1
+        while mc < r:
+            mc <<= 1
+        mc -= 1
+
         for i in range(0, n+1):
             if i == n:
                 for k,v in ls.items():
@@ -12,7 +14,7 @@ class YetAnotherORProblem2:
                 return c%1000000009
             cs = {0:0}
             for k,v in ls.items():
-                mask = ((1<<mc)-1)^k
+                mask = mc^k
                 for j in range(0, mask+1):
                     if k & j == 0:
                         cs[k+j] =  cs.get(k+j, 0) + v
