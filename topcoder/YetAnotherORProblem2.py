@@ -6,6 +6,8 @@ class YetAnotherORProblem2:
         while mc < r:
             mc <<= 1
         mc -= 1
+        for i in range(0, r+1):
+            ls[i] = 1
 
         for i in range(0, n+1):
             if i == n:
@@ -15,9 +17,12 @@ class YetAnotherORProblem2:
             cs = {0:0}
             for k,v in ls.items():
                 mask = mc^k
-                for j in range(0, mask+1):
-                    if k & j == 0:
-                        cs[k+j] =  cs.get(k+j, 0) + v
+                j = k & -k
+                while j <= r:
+                     cs[k+j] =  cs.get(k+j, 0) + v
+                     j = ((j | ~k) + 1) & k
+                     if j == 0:
+                         break
             ls = cs.copy()
 
 if __name__ == "__main__":
