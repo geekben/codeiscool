@@ -1,21 +1,28 @@
 class Xscoregame:
     def getscore(self, a):
-        r = []
-        s = {}
+        s = {(0,0):0}
+        n = len(a)
 
-        def dfs(x,a):
-            t = []
-            for y in a:
-                tx = x
-                ta = a[:]
-                ta.remove(y)
-                tx = tx + (tx^y)
-                if ta == []:
-                    return tx
-                t.append(dfs(tx, ta))
-            return max(t)
+        ln = 1<<n
+        for i in range(0, ln):
+            for j in range(0, 64):
+                if s.get((i,j), -1) < 0:
+                    continue
+                for idx,k in enumerate(a):
+                    e = 1 << idx
+                    if e & i > 0:
+                        continue
+                    t = s[(i,j)]
+                    t += t ^ k
+                    ni = i|e
+                    nj = t%64
+                    s[(ni, nj)] = max(s.get((ni, nj),-1), t)
 
-        ret = dfs(0, a)
+        ret = 0
+        nn = ln - 1
+        for j in range(0, 64):
+            ret = max(ret, s.get((nn,j),-1))
+
         return ret
 
 if __name__ == "__main__":
@@ -24,3 +31,4 @@ if __name__ == "__main__":
     print Xscoregame().getscore([1,1,1,1,1,1])
     print Xscoregame().getscore([1,0,1,0,1,0,1,0])
     print Xscoregame().getscore([50,0,1,0,1,0,1,0,1,0,1,0,1,0,1])
+
