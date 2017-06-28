@@ -87,7 +87,7 @@ def _print_fragmentation(frag_dict, out):
                 total_free_pages += (2**order) * free_count
                 overall_frag_pct += frag_pct
 
-                frag_pct = "%d" % round(frag_pct)
+                frag_pct = "%d" % round(frag_pct*100)
 
                 rows.append((order, free_count, frag_pct))
 
@@ -104,7 +104,7 @@ def _print_fragmentation(frag_dict, out):
             overall_frag_pct /= 11
                 
             write("Total Free Pages: %d\n" % total_free_pages)
-            write("Overall Fragmentation: %d\n"% round(overall_frag_pct))
+            write("Overall Fragmentation[%%]: %d\n"% round(overall_frag_pct*100))
             write('\n')
 
 def _calculate_fragmentation(buddyinfo_output):
