@@ -25,7 +25,7 @@ def generateParenthesis(n):
     :rtype: List[str]
     """
     for i in enumPat(n*2, n):
-        print i
+        print ''.join(i)
 
 if __name__ == "__main__":
     generateParenthesis(1)
