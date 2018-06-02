@@ -1,34 +1,32 @@
-def enumPat(s,n):
-    if n < 1 or s < n:
-        print "Error arg"
-        return []
-    if s == n:
-        return [[")"]*s]
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
 
-    if n == 1:
-        return [["("]*(s-1) + [")"]]
+        r = {}
+        r[0] = [""]
 
-    r = []
-    r0 = enumPat(s-1, n)
-    for i in r0:
-        r.append(["("]+i)
-    if (s-n < n):
-        r1 = enumPat(s-1, n-1)
-        for i in r1:
-            r.append([")"]+i)
-    return r
+        for i in range(1, n+1):
+            t = []
+            for j in range(0, i):
+                for k in r[j]:
+                    for l in r[i-j-1]:
+                        t.append('('+k+')'+l)
+            r[i] = t
 
+        return r[n]
 
-def generateParenthesis(n):
-    """
-    :type n: int
-    :rtype: List[str]
-    """
-    for i in enumPat(n*2, n):
-        print ''.join(i)
 
 if __name__ == "__main__":
-    generateParenthesis(1)
-    generateParenthesis(2)
-    generateParenthesis(3)
-    generateParenthesis(4)
+    print Solution().generateParenthesis(1)
+    print Solution().generateParenthesis(2)
+    print Solution().generateParenthesis(3)
+    r = Solution().generateParenthesis(4)
+    print r
+    e = ["(((())))","((()()))","((())())","((()))()","(()(()))","(()()())","(()())()","(())(())","(())()()","()((()))","()(()())","()(())()","()()(())","()()()()"]
+    for i in e:
+        if i not in r:
+            print i
+
