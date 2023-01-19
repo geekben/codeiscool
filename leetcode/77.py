@@ -6,19 +6,22 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         ret = []
-        ret.append(range(1, k+1))
 
         if n == k:
+            ret.append(range(1, k+1))
             return ret
 
-        for i in range(k+1, n+1):
-            for j in ret:
-                tr = []
-                for l in range(1, i):
-                    if l in j:
-                        t = j[:]
-                        t.remove(l)
-                        t.append(i)
-                        tr.append(t)
-                ret = ret + tr
+        # count = n!/(n-k)!/k!
+        for t in range(0, k):
+            if t == 0:
+                for i in range(1, n-k+2):
+                    ret.append([i])
+                continue
+            tr = []
+            for r in ret:
+                if r[-1] == n:
+                    continue
+                for j in range(r[-1]+1, n+1):
+                    tr.append(r+[j])
+            ret = tr
         return ret
