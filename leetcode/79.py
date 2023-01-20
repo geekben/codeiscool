@@ -19,14 +19,26 @@ class Solution(object):
         t = []
         stat = [[] for _ in xrange(m)]
         c = word[0]
+        ht = {}
         for i,line in enumerate(board):
             stat[i] = [-1 for _ in xrange(n)]
             for j,ch in enumerate(line):
+                if ch not in ht.keys():
+                    ht[ch] = 1
+                else:
+                    ht[ch] += 1
                 if c == ch:
                     t.append([i,j])
                     stat[i][j] = 0
         if len(t) == 0:
             return False
+        for c in word:
+            if c not in ht.keys():
+                return False
+            else:
+                if ht[c] == 0:
+                    return False
+                ht[c] -= 1
         
         def deep_search(p, w, b):
             c = w[0]
