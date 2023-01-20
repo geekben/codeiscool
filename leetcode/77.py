@@ -21,7 +21,7 @@ class Solution(object):
             for r in ret:
                 if r[-1] == n:
                     continue
-                for j in range(r[-1]+1, n+1):
+                for j in range(r[-1]+1, n-k+2+t):
                     tr.append(r+[j])
             ret = tr
         return ret
