@@ -8,6 +8,7 @@ class Solution(object):
         last = nums[0]
         c = 1
         le = 0
+        he = 0 # head of em
 
         for i,n in enumerate(nums):
             if i == 0:
@@ -18,17 +19,17 @@ class Solution(object):
                     em.append(i)
                     le += 1
                 elif le > 0:
-                    ei = em[0]
+                    ei = em[he]
                     nums[ei] = n
-                    em = em[1:] # could use pointer to avoid copy
+                    he += 1
                     em.append(i)
             else:
                 c = 1
                 last = n
                 if le > 0:
-                    ei = em[0]
+                    ei = em[he]
                     nums[ei] = n
-                    em = em[1:] # could use pointer to avoid copy
+                    he += 1
                     em.append(i)
 
         return len(nums) - le
