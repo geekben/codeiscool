@@ -11,7 +11,7 @@ class Solution(object):
             else:
                 return False
 
-        l = 1
+        l = 0
         ln = len(nums)
         r = ln - 1
 
@@ -23,28 +23,48 @@ class Solution(object):
 
         p = 0
         while l <= r:
-            p = (l+r)/2
-            if nums[p-1] >= nums[0]:
-                if nums[p] <= nums[ln-1]:
-                    if target_between(target, nums[p], nums[ln-1]):
-                        l = p
-                        r = ln-1
-                    elif target_between(target, nums[0], nums[p-1]):
-                        l = 0
-                        r = p-1
+            # bsearch must take care of pivot position
+            s = l + r
+            if s%2 == 1:
+                p = s/2 + 1
+            else:
+                p = s/2
+
+            if nums[p] == target or nums[p-1] == target:
+                return True
+
+            # absorbs the same values around pivot
+            # this is important because it can't tell
+            # which direction to take next if the candidate
+            # pivot in this try is among the same values
+            # and absorbtion could destroy the array rotation
+            # assumption so we must judge before going further
+            if nums[l] < nums[r]:
+                break
+            if nums[p-1] == nums[p] and \
+                nums[l] == nums[r] and \
+                nums[l] == nums[p]:
+                l += 1
+                r -= 1
+                continue
+
+            if nums[p-1] >= nums[l]:
+                if nums[p] <= nums[r]:
+                    if target_between(target, nums[p], nums[r]):
+                        l = p + 1 # if l = p, could be a deadloop
+                    elif target_between(target, nums[l], nums[p-1]):
+                        r = p - 1
                     else:
                         return False
                     break
                 else:
-                    if target_between(target, nums[0], nums[p-1]):
-                        l = 0
-                        r = p-1
+                    if target_between(target, nums[l], nums[p-1]):
+                        r = p - 1
                         break
-                    l = p
+                    l = p + 1
             else:
-                if target_between(target, nums[p], nums[ln-1]):
-                    l = p
-                    r = ln-1
+                if target_between(target, nums[p], nums[r]):
+                    l = p + 1
                     break
                 r = p - 1
 
@@ -57,4 +77,3 @@ class Solution(object):
             else:
                 l = p + 1
         return False
-
