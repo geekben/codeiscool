@@ -21,11 +21,15 @@ class Solution(object):
                     q = l
             else:
                 if q:
-                    l.next = p.next
-                    p.next = q.next
-                    q.next = p
-                    q = p
-                    p = l.next
+                    if p.next == None or p.next.val >= x:
+                        temp = l.next
+                        l.next = p.next
+                        p.next = q.next
+                        q.next = temp
+                        q = p
+                        p = l.next
+                        continue
+                    p = p.next
                     continue
             l = p
             p = p.next
