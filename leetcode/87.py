@@ -52,6 +52,9 @@ class Solution(object):
     bk2 = {}
     st1 = []
     st2 = []
+    s1 = ""
+    s2 = ""
+    ss = {}
 
     def dist(self, n, d1, d2):
         if n == 1:
@@ -75,13 +78,13 @@ class Solution(object):
 
     def bkcmp(self, h1, e1, h2, e2):
         #print h1,e1,h2,e2
+        ss = self.ss
+        if (h1,e1,h2) in ss.keys():
+            return ss[(h1,e1,h2)]
 
-        if h1 == e1:
-            if self.dist(1, h1-1, e1) == \
-                self.dist(2, h2-1, e2):
-                return True
-            else:
-                return False
+        if self.s1[h1:e1+1] == self.s2[h2:e2+1]:
+            ss[(h1,e1,h2)] = True
+            return True
 
         m = (h1 + e1)/2
         for i in xrange(h1,e1):
@@ -94,9 +97,11 @@ class Solution(object):
             if l1 == l2:
                 if i <= m and self.bkcmp(h1, i, h2, h2+d) and \
                     self.bkcmp(i+1, e1, h2+d+1, e2):
+                    ss[(h1,e1,h2)] = True
                     return True
                 if i > m and self.bkcmp(i+1, e1, h2+d+1, e2) and \
                     self.bkcmp(h1, i, h2, h2+d):
+                    ss[(h1,e1,h2)] = True
                     return True
 
             l2 = self.dist(2, h2-1, e2-d-1)
@@ -104,11 +109,14 @@ class Solution(object):
             if l1 == r2:
                 if i <= m and self.bkcmp(h1, i, e2-d, e2) and \
                     self.bkcmp(i+1, e1, h2, e2-d-1):
+                    ss[(h1,e1,h2)] = True
                     return True
                 if i > m and self.bkcmp(i+1, e1, h2, e2-d-1) and \
                     self.bkcmp(h1, i, e2-d, e2):
+                    ss[(h1,e1,h2)] = True
                     return True
 
+        ss[(h1,e1,h2)] = False
         return False
 
     def isScramble(self, s1, s2):
@@ -123,13 +131,15 @@ class Solution(object):
                 return True
             else:
                 return False
-
+        self.s1 = s1
+        self.s2 = s2
         self.st1 = [[None for _ in xrange(l+1)] for _ in xrange(l)]
         self.st2 = [[None for _ in xrange(l+1)] for _ in xrange(l)]
         self.bk1 = [{} for _ in xrange(l+1)] # last item for -1
         self.bk2 = [{} for _ in xrange(l+1)]
         self.st1.append(self.bk1)
         self.st2.append(self.bk2)
+        self.ss = {}
 
         for i in xrange(l):
             if i > 0:
