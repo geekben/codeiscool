@@ -1,12 +1,11 @@
 class Solution(object):
+    import copy
     def isScramble(self, s1, s2):
         """
         :type s1: str
         :type s2: str
         :rtype: bool
         """
-        import copy
-
         def dist(d1, d2):
             d = copy.deepcopy(d2)
             for k in d.keys():
@@ -24,7 +23,7 @@ class Solution(object):
                 return False
 
         #bk1 = [[0 for _ in xrange(26)] for _ in xrange(len(s1))]
-        #pruning same substrings
+        # TODO: take out the bk calculation from recursive calls
         bk1 = [{} for _ in xrange(l)]
         for i in xrange(l):
             if i > 0:
@@ -53,24 +52,26 @@ class Solution(object):
         for i in xrange(l-1):
             l1 = bk1[i]
             r1 = dist(l1, bk1[l-1])
+
             l2 = bk2[i]
             r2 = dist(l2, bk2[l-1])
-
-            if l1 == l2 and r1 == r2:
+            if l1 == l2:
                 if self.isScramble(s1[:i+1],s2[:i+1]) and \
                     self.isScramble(s1[i+1:],s2[i+1:]):
                     return True
-            if l1 == r2 and r1 == l2:
+            '''
+            if l1 == r2:
                 if self.isScramble(s1[:i+1],s2[i+1:]) and \
                     self.isScramble(s1[i+1:],s2[:i+1]):
                     return True
-            #if l1 != l2 and l1 != r2:
-            if l1 != l2:
-                #l2 = bk2[(l-1)-(i+1)]
-                l2 = bk2[-i-2]
-                r2 = dist(l2, bk2[l-1])
-                if l1 == r2 and r1 == l2:
-                    if self.isScramble(s1[:i+1],s2[-i-1:]) and \
-                        self.isScramble(s1[i+1:],s2[:-i-1]):
-                        return True
+            '''
+
+            #l2 = bk2[(l-1)-(i+1)]
+            l2 = bk2[-i-2]
+            r2 = dist(l2, bk2[l-1])
+            if l1 == r2:
+                if self.isScramble(s1[:i+1],s2[-i-1:]) and \
+                    self.isScramble(s1[i+1:],s2[:-i-1]):
+                    return True
+
         return False
