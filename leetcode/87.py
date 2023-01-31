@@ -117,9 +117,13 @@ class Solution(object):
             else:
                 return False
 
-        self.st1 = [[None for _ in xrange(l+1)] for _ in xrange(l+1)]
-        self.st2 = [[None for _ in xrange(l+1)] for _ in xrange(l+1)]
+        self.st1 = [[None for _ in xrange(l+1)] for _ in xrange(l)]
+        self.st2 = [[None for _ in xrange(l+1)] for _ in xrange(l)]
         self.bk1 = [{} for _ in xrange(l+1)] # last item for -1
+        self.bk2 = [{} for _ in xrange(l+1)]
+        self.st1.append(self.bk1)
+        self.st2.append(self.bk2)
+
         for i in xrange(l):
             if i > 0:
                 self.bk1[i] = copy.deepcopy(self.bk1[i-1])
@@ -130,7 +134,6 @@ class Solution(object):
             else:
                 self.bk1[i][c] += 1
 
-        self.bk2 = [{} for _ in xrange(l+1)]
         for i in xrange(l):
             if i > 0:
                 self.bk2[i] = copy.deepcopy(self.bk2[i-1])
