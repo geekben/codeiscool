@@ -1,3 +1,51 @@
+'''
+"abcde"
+"caebd"
+"a"
+"a"
+"a"
+"b"
+"abcdeg"
+"caebdg"
+"abcdeg"
+"gcaebd"
+"aa"
+"aa"
+"ab"
+"ba"
+"abc"
+"cba"
+"aaaaabbbbb"
+"aabbaabbaa"
+"abcdegreat"
+"tgreacaebd"
+"abcdbdacbdac"
+"bdacabcdbdac"
+"abcdecaebd"
+"caebdabcde"
+"abcdbdac"
+"bdacabcd"
+"ccababcaabcb"
+"bccbccaaabab"
+"ccababcaabc"
+"bccbccaaaba"
+"ccababcaa"
+"cbccaaaba"
+"cababca"
+"bccaaab"
+"ccababcaabc"
+"ccbccaaabab"
+"caabc"
+"bccaa"
+"ccababcaabcbbccbccaaabab"
+"bccbccaaababccababcaabcb"
+"ccababcaabcbbccbccaaababgreat"
+"bccbccaaababccababcaabcbrgeat"
+"ccababcaabcbbccbccaaabababcdeg"
+"caebdgbccbccaaababccababcaabcb"
+"eebaacbcbcadaaedceaaacadccd"
+"eadcaacabaddaceacbceaabeccd"
+'''
 class Solution(object):
     import copy
     def isScramble(self, s1, s2):
@@ -23,7 +71,6 @@ class Solution(object):
                 return False
 
         #bk1 = [[0 for _ in xrange(26)] for _ in xrange(len(s1))]
-        # TODO: take out the bk calculation from recursive calls
         bk1 = [{} for _ in xrange(l)]
         for i in xrange(l):
             if i > 0:
@@ -46,32 +93,46 @@ class Solution(object):
             else:
                 bk2[i][c] += 1
 
+        #print bk1,bk2
         if bk1[l-1] != bk2[l-1]:
             return False
 
-        for i in xrange(l-1):
-            l1 = bk1[i]
-            r1 = dist(l1, bk1[l-1])
+        def bkcmp(bk1,bk2,h1,e1,h2,e2):
+            #print h1,e1,h2,e2
+            if h1 == 0:
+                t1 = {}
+            else:
+                t1 = bk1[h1-1]
+            if h2 == 0:
+                t2 = {}
+            else:
+                t2 = bk2[h2-1]
 
-            l2 = bk2[i]
-            r2 = dist(l2, bk2[l-1])
-            if l1 == l2:
-                if self.isScramble(s1[:i+1],s2[:i+1]) and \
-                    self.isScramble(s1[i+1:],s2[i+1:]):
+            if h1 == e1:
+                if dist(t1, bk1[e1]) == dist(t2, bk2[e2]):
                     return True
-            '''
-            if l1 == r2:
-                if self.isScramble(s1[:i+1],s2[i+1:]) and \
-                    self.isScramble(s1[i+1:],s2[:i+1]):
-                    return True
-            '''
+                else:
+                    return False
 
-            #l2 = bk2[(l-1)-(i+1)]
-            l2 = bk2[-i-2]
-            r2 = dist(l2, bk2[l-1])
-            if l1 == r2:
-                if self.isScramble(s1[:i+1],s2[-i-1:]) and \
-                    self.isScramble(s1[i+1:],s2[:-i-1]):
-                    return True
+            for i in xrange(h1,e1):
+                d = i - h1
+                l1 = dist(t1, bk1[i])
+                r1 = dist(bk1[i], bk1[e1])
 
-        return False
+                l2 = dist(t2, bk2[h2+d])
+                r2 = dist(bk2[h2+d], bk2[e2])
+                if l1 == l2:
+                    if bkcmp(bk1, bk2, h1, i, h2, h2+d) and \
+                        bkcmp(bk1, bk2, i+1, e1, h2+d+1, e2):
+                        return True
+
+                l2 = dist(t2, bk2[e2-d-1])
+                r2 = dist(bk2[e2-d-1], bk2[e2])
+                if l1 == r2:
+                    if bkcmp(bk1, bk2, h1, i, e2-d, e2) and \
+                        bkcmp(bk1, bk2, i+1, e1, h2, e2-d-1):
+                        return True
+
+            return False
+
+        return bkcmp(bk1, bk2, 0, l-1, 0, l-1)
