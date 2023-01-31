@@ -83,6 +83,7 @@ class Solution(object):
             else:
                 return False
 
+        m = (h1 + e1)/2
         for i in xrange(h1,e1):
             d = i - h1
             l1 = self.dist(1, h1-1, i)
@@ -91,15 +92,21 @@ class Solution(object):
             l2 = self.dist(2, h2-1, h2+d)
             r2 = self.dist(2, h2+d, e2)
             if l1 == l2:
-                if self.bkcmp(h1, i, h2, h2+d) and \
+                if i <= m and self.bkcmp(h1, i, h2, h2+d) and \
                     self.bkcmp(i+1, e1, h2+d+1, e2):
+                    return True
+                if i > m and self.bkcmp(i+1, e1, h2+d+1, e2) and \
+                    self.bkcmp(h1, i, h2, h2+d):
                     return True
 
             l2 = self.dist(2, h2-1, e2-d-1)
             r2 = self.dist(2, e2-d-1, e2)
             if l1 == r2:
-                if self.bkcmp(h1, i, e2-d, e2) and \
+                if i <= m and self.bkcmp(h1, i, e2-d, e2) and \
                     self.bkcmp(i+1, e1, h2, e2-d-1):
+                    return True
+                if i > m and self.bkcmp(i+1, e1, h2, e2-d-1) and \
+                    self.bkcmp(h1, i, e2-d, e2):
                     return True
 
         return False
