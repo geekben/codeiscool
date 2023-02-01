@@ -9,7 +9,7 @@ class Solution(object):
         ss = self.ss
         sk = s1+s2
 
-        if sk in ss.keys():
+        if sk in ss:
             return ss[sk]
 
         if s1 == s2:
