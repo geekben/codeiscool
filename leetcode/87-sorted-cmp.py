@@ -21,11 +21,19 @@ class Solution(object):
             return False
 
         l = len(s1)
+        m = l/2
         for i in xrange(1,l):
-            if self.isScramble(s1[:i],s2[:i]) and self.isScramble(s1[i:],s2[i:]):
+            if i >= m and \
+                self.isScramble(s1[:i],s2[:i]) and self.isScramble(s1[i:],s2[i:]) \
+                or i < m and \
+                self.isScramble(s1[i:],s2[i:]) and self.isScramble(s1[:i],s2[:i]):
                 ss[sk] = True
                 return True
-            if self.isScramble(s1[:i],s2[-i:]) and self.isScramble(s1[i:],s2[:-i]):
+
+            if i >= m and \
+                self.isScramble(s1[:i],s2[-i:]) and self.isScramble(s1[i:],s2[:-i]) \
+                or i < m and \
+                self.isScramble(s1[i:],s2[:-i]) and self.isScramble(s1[:i],s2[-i:]):
                 ss[sk] = True
                 return True
 
