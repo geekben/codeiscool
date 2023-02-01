@@ -29,22 +29,24 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        a = nums1[:m]
+        if m != 0:
+            nums1[-m:] = nums1[:m]
+        a = nums1
         b = nums2
-        p = 0
+        p = n
         q = 0
 
-        while p < m and q < n:
+        while p < m+n and q < n:
             if a[p] <= b[q]:
-                nums1[p+q] = a[p]
+                nums1[p+q-n] = a[p]
                 p += 1
             else:
-                nums1[p+q] = b[q]
+                nums1[p+q-n] = b[q]
                 q += 1
 
-        while p < m:
-            nums1[p+q] = a[p]
+        while p < m+n:
+            nums1[p+q-n] = a[p]
             p += 1
         while q < n:
-            nums1[p+q] = b[q]
+            nums1[p+q-n] = b[q]
             q += 1
