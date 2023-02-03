@@ -5,12 +5,12 @@ class Solution(object):
         :type n: int
         :rtype: List[int]
         """
-        ret = [0] # TODO: pre allocate for time
+        ret = [0 for _ in xrange(1<<n) ]
 
         for i in xrange(n):
-            # l = 1 << i # slower than len()
-            l = len(ret)
+            l = 1 << i # slower than len()
+            # l = len(ret)
             for j in xrange(l-1,-1,-1):
-                ret.append(ret[j] + (1<<i))
+                ret[l+l-1-j] = ret[j] + (1<<i)
 
         return ret
