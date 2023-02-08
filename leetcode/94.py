@@ -13,10 +13,8 @@ class Solution(object):
         if root == None:
             return []
         ret = []
-        if root.left:
-            ret += self.inorderTraversal(root.left)
+        ret += self.inorderTraversal(root.left)
         ret.append(root.val)
-        if root.right:
-            ret += self.inorderTraversal(root.right)
+        ret += self.inorderTraversal(root.right)
 
         return ret
