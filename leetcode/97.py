@@ -12,6 +12,11 @@ class Solution(object):
             return d[(s1,s2,s3)]
         l1 = len(s1)
         l2 = len(s2)
+        l3 = len(s3)
+        if l1 + l2 != l3:
+            d[(s1,s2,s3)] = False
+            return False
+
         hs = s1
         ts = s2
         if l1 > l2:
