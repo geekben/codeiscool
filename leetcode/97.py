@@ -30,9 +30,12 @@ class Solution(object):
             else:
                 d[(s1,s2,s3)] = False
                 return False
-        h = hs[0]
+
         for i,c in enumerate(s3):
-            if c == h and ts[:i] == s3[:i] and \
+            if ts[:i] != s3[:i]:
+                d[(s1,s2,s3)] = False
+                return False
+            if c == hs[0] and \
                 self.isInterleave(hs[1:], ts[i:], s3[i+1:]):
                 d[(s1,s2,s3)] = True
                 return True
