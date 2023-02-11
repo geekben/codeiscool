@@ -21,6 +21,7 @@ class Solution(object):
                 return False
         h = hs[0]
         for i,c in enumerate(s3):
-            if c == h and self.isInterleave(hs[1:], ts, s3[:i]+s3[i+1:])
+            if c == h and ts[:i] == s3[:i] and \
+                self.isInterleave(hs[1:], ts[i:], s3[i+1:]):
                 return True
         return False
