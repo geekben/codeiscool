@@ -5,22 +5,20 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def expandTreeLR(self, root):
-        if root is None:
-            return [None],[None]
-        l, r = self.expandTreeLR(root.left)
-        a = [root.val] + l + r
-        l, r = self.expandTreeLR(root.right)
-        b = [root.val] + r + l
-        return a,b
-
+    def compareTree(self, l, r):
+        if l is None and r is None:
+            return True
+        if l is None or r is None:
+            return False
+        if l.val != r.val:
+            return False
+        return self.compareTree(l.left, r.right) and \
+            self.compareTree(l.right, r.left)
     def isSymmetric(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        elr,erl = self.expandTreeLR(root)
-        if elr == erl:
+        if root is None:
             return True
-        else:
-            return False
+        return self.compareTree(root.left, root.right)
