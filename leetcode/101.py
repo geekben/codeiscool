@@ -7,23 +7,19 @@
 class Solution(object):
     def expandTreeLR(self, root):
         if root is None:
-            return [None]
-        l = self.expandTreeLR(root.left)
-        r = self.expandTreeLR(root.right)
-        return [root.val] + l + r
-    def expandTreeRL(self, root):
-        if root is None:
-            return [None]
-        r = self.expandTreeRL(root.right)
-        l = self.expandTreeRL(root.left)
-        return [root.val] + r + l
+            return [None],[None]
+        l, r = self.expandTreeLR(root.left)
+        a = [root.val] + l + r
+        l, r = self.expandTreeLR(root.right)
+        b = [root.val] + r + l
+        return a,b
+
     def isSymmetric(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        elr = self.expandTreeLR(root)
-        erl = self.expandTreeRL(root)
+        elr,erl = self.expandTreeLR(root)
         if elr == erl:
             return True
         else:
