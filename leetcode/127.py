@@ -24,6 +24,8 @@ class Solution(object):
     def compareWord(self, a, b):
         if (a,b) in self.st:
             return self.st[(a,b)]
+        if (b,a) in self.st:
+            return self.st[(b,a)]
         l = len(a)
         c = 0
         for i in xrange(l):
@@ -34,27 +36,44 @@ class Solution(object):
                 return 2
         self.st[(a,b)] = c
         return c
-    def ladderLengthInner(self, pq, endWord, wordList):
+    def ladderLengthInner(self, pq, eq, wordList):
         q = []
         wl = wordList[:]
         # print "===",pq,wl
         for bw in pq:
+            for w in eq:
+                cr = self.compareWord(bw, w)
+                if cr == 1:
+                    return 1
             tl = wl[:]
             for w in tl:
                 cr = self.compareWord(bw, w)
                 if cr == 1:
-                    if w == endWord:
-                        return 1
                     q.append(w)
                     wl.remove(w)
                 if cr == 0:
                     wl.remove(w) # beginWord may be in wordList though not need to
 
+        q2 = []
+        for ew in eq:
+            for w in q:
+                cr = self.compareWord(ew, w)
+                if cr == 1:
+                    return 2
+            tl = wl[:]
+            for w in tl:
+                cr = self.compareWord(ew, w)
+                if cr == 1:
+                    q2.append(w)
+                    wl.remove(w)
+                if cr == 0:
+                    wl.remove(w)
+
         # print q,wl
-        if q == []:
+        if q == [] or q2 == []:
             ret = 5002
         else:
-            ret = 1 + self.ladderLengthInner(q, endWord, wl)
+            ret = 2 + self.ladderLengthInner(q, q2, wl)
         return ret
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -66,7 +85,7 @@ class Solution(object):
         if endWord not in wordList:
             return 0
 
-        ret = 1 + self.ladderLengthInner([beginWord], endWord, wordList)
+        ret = 1 + self.ladderLengthInner([beginWord], [endWord], wordList)
         if ret >= 5001 or ret == 1:
             ret = 0
 
