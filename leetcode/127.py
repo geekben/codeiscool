@@ -39,21 +39,35 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
+        if endWord not in wordList:
+            return 0
+
         l = len(beginWord)
         ws = set(wordList)    
-        q = [(beginWord, 1)]
-        while q:
-            w,level = q.pop(0)
-            for i in xrange(l):
-                for n in xrange(97, 123):
-                    c = chr(n)
-                    if c == w[i]:
-                        continue
-                    nw = w[:i] + c + w[i+1:]
-                    if nw in ws:
-                        if nw == endWord:
+        bq = [beginWord]
+        eq = [endWord]
+        bv = set([beginWord])
+        ev = set([endWord])
+        level = 1
+        while bq and eq:
+            lb = len(bq)
+            le = len(eq)
+            if lb > le:
+                bq, eq = eq, bq
+                bv, ev = ev, bv
+            for _ in xrange(len(bq)):
+                w = bq.pop(0)
+                for i in xrange(l):
+                    for n in xrange(97, 123):
+                        c = chr(n)
+                        if c == w[i]:
+                            continue
+                        nw = w[:i] + c + w[i+1:]
+                        if nw in ev:
                             return level+1
-                        q.append((nw, level+1))
-                        ws.remove(nw)
+                        if nw in ws and nw not in bv:
+                            bq.append(nw)
+                            bv.add(nw)
+            level += 1
 
         return 0
