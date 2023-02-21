@@ -5,21 +5,22 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
+    m = -1001
     def check(self, root):
         if root is None:
-            return -1001,-1001
-        lm, li = self.check(root.left)
-        rm, ri = self.check(root.right)
+            return 0
+        li = self.check(root.left)
+        ri = self.check(root.right)
         hv = root.val
         i = max(hv+li, hv+ri, hv)
-        m = max(i, hv+li+ri, lm, rm)
+        self.m = max(i, hv+li+ri, self.m)
         
-        return m,i
+        return i
 
     def maxPathSum(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        m,i = self.check(root)
-        return m
+        self.check(root)
+        return self.m
