@@ -5,28 +5,18 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    st = {}
-    def maxDepth(self, root):
-        if root is None:
-            return 0
-        if root in self.st:
-            return self.st[root]
-        ret = 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
-        self.st[root] = ret
-        return ret
     def isBalancedInner(self, root):
         if root is None:
-            return True
-        ld = self.maxDepth(root.left)
-        rd = self.maxDepth(root.right)
-        if abs(ld-rd) > 1:
-            return False
+            return 0
+        ld = self.isBalancedInner(root.left)
+        rd = self.isBalancedInner(root.right)
+        if ld == -1 or rd == -1 or abs(ld-rd) > 1:
+            return -1
         else:
-            return self.isBalancedInner(root.left) and self.isBalancedInner(root.right)
+            return 1 + max(ld, rd)
     def isBalanced(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        self.st = {}
-        return self.isBalancedInner(root)
+        return self.isBalancedInner(root) >= 0
