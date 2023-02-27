@@ -8,12 +8,11 @@ class Solution(object):
 
         for c in s:
             t = []
-            for r in ret:
+            for r in ret[:]:
+                r.append(c)
                 lr = len(r)
-                t.append(r+[c])
-                if lr > 0 and r[-1] == c:
-                    t.append(r[:-1]+[c+c])
                 if lr > 1 and r[-2] == c:
-                    t.append(r[:-2]+[c+r[-1]+c])
-            ret = t
+                    ret.append(r[:-2]+[c+c])
+                if lr > 2 and r[-3] == c:
+                    ret.append(r[:-3]+[c+r[-2]+c])
         return ret
