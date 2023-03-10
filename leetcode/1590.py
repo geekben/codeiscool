@@ -6,29 +6,18 @@ class Solution(object):
         :rtype: int
         """
         ln = len(nums)
-        st = {}
+        st = {0: -1}
+        s = 0
+        ret = ln
 
-        dp = [[0 for _ in xrange(ln)] for _ in xrange(ln)]
-        for i in xrange(ln):
-            for j in xrange(i, ln):
-                if i == j:
-                    dp[i][j] = nums[i]
-                else:
-                    dp[i][j] = dp[i][j-1] + nums[j]
-                d = dp[i][j] % p
-                if d == 0:
-                    continue
-                if d in st:
-                    st[d] = min(st[d], j-i+1)
-                else:
-                    st[d] = j-i+1
-
-        if dp[0][ln-1] < p:
-            return -1
-        d = dp[0][ln-1] % p
+        d = sum(nums) % p
         if d == 0:
             return 0
-        if d in st:
-            return st[d]
-        else:
-            return -1
+        for i,n in enumerate(nums):
+            s += n
+            sd = s % p
+            td = (s - d) % p
+            if td in st:
+                ret = min(ret, i - st[td])
+            st[sd] = i
+        return ret if ret < ln else -1
