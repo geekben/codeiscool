@@ -7,27 +7,28 @@ class Solution(object):
         """
         ln = len(nums)
         st = {}
-        s = 0
-        for n in nums:
-            s += n
-        d = s % p
+
+        dp = [[0 for _ in xrange(ln)] for _ in xrange(ln)]
+        for i in xrange(ln):
+            for j in xrange(i, ln):
+                if i == j:
+                    dp[i][j] = nums[i]
+                else:
+                    dp[i][j] = dp[i][j-1] + nums[j]
+                d = dp[i][j] % p
+                if d == 0:
+                    continue
+                if d in st:
+                    st[d] = min(st[d], j-i+1)
+                else:
+                    st[d] = j-i+1
+
+        if dp[0][ln-1] < p:
+            return -1
+        d = dp[0][ln-1] % p
         if d == 0:
             return 0
-
-        lp = min(p, ln)
-        for i in xrange(1, lp):
-            last = 0
-            for k in xrange(i):
-                last += nums[k]
-            if last % p == d: return i
-            for j in xrange(i, ln):
-                if i == 1:
-                    last = nums[j]
-                elif i == 2:
-                    last = nums[j-1] + nums[j]
-                else:
-                    last = last - nums[j-i] + nums[j]
-                if last % p == d:
-                    return i
-
-        return -1
+        if d in st:
+            return st[d]
+        else:
+            return -1
