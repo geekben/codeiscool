@@ -6,17 +6,25 @@ class Solution(object):
         :rtype: int
         """
         ret = 0
-        ln = len(nums)
-        lm = min(ln-k, k) * 2 + 1
-        for w in xrange(1, lm+1):
-            for i in xrange(ln-w+1):
-                if k in nums[i:i+w]:
-                    left = right = 0
-                    for j in xrange(i,i+w):
-                        if nums[j] > k:
-                            right += 1
-                        elif nums[j] < k:
-                            left += 1
-                    if right == left or left + 1 == right:
-                        ret += 1
+        idx = nums.index(k)
+        dp = {}
+        dp[0] = 1
+        ts = 0
+
+        for i,n in enumerate(nums):
+            t = 0
+            if n > k: t = 1
+            elif n < k: t = -1
+            ts += t
+            if i < idx:
+                if ts in dp:
+                    dp[ts] += 1
+                else:
+                    dp[ts] = 1
+            else:
+                if ts in dp:
+                    ret += dp[ts]
+                if ts - 1 in dp:
+                    ret += dp[ts-1]
+
         return ret
