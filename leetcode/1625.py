@@ -7,7 +7,7 @@ class Solution(object):
         :rtype: str
         """
         ls = len(s)
-        #sn = [int(s[i]) for i in xrange(ls)]
+        sn = [int(s[i]) for i in xrange(ls)]
         #mi = -1
         #mn = -1
         ms = "9"*ls
@@ -29,9 +29,9 @@ class Solution(object):
                     sv = ""
                     for k in xrange(i,i+ls):
                         if k % 2 == 0:
-                            t = (int(s[k%ls]) + a * j2) % 10
+                            t = (sn[k%ls] + a * j2) % 10
                         else:
-                            t = (int(s[k%ls]) + a * j) % 10
+                            t = (sn[k%ls] + a * j) % 10
                         sv += str(t)
                     ms = min(sv, ms)
             i = (i+b)%ls
