@@ -1,22 +1,19 @@
 class StreamChecker(object):
-    words = None
     ws = {}
-    lw = []
     ls = ''
+
     def __init__(self, words):
         """
         :type words: List[str]
         """
-        self.words = words
-        self.lw = []
         self.ws = {}
         self.ls = ''
-        for i,w in enumerate(words):
-            if w[-1] not in self.ws:
-                self.ws[w[-1]] = [i]
-            else:
-                self.ws[w[-1]].append(i)
-            self.lw.append(len(w))
+        for w in words:
+            lw = len(w)
+            if lw not in self.ws:
+                self.ws[lw] = set()
+            self.ws[lw].add(w)
+
         # print self.ws,self.lw
 
 
@@ -26,12 +23,8 @@ class StreamChecker(object):
         :rtype: bool
         """
         self.ls += letter
-        #self.ll += 1
-        if letter not in self.ws:
-            return False
-        for i in self.ws[letter]:
-            if self.ls[(-1*self.lw[i]):] \
-                    == self.words[i]:
+        for i in self.ws.keys():
+            if self.ls[-i:] in self.ws[i]:
                 return True
         return False
 
