@@ -14,11 +14,15 @@ class Solution(object):
 
         for i in xrange(1,la):
             if arr[i] < arr[i-1]:
-                hc = i
+                he = i - 1
+                break
             else:
-                if he == i - 1:
-                    he = i
-                    tc -= 1
+                tc -= 1
+        hc = la - 1
+        for i in xrange(la-2,0,-1):
+            if arr[i] > arr[i+1]:
+                hc = i + 1
+                break
         if tc == 0:
             return 0
 
