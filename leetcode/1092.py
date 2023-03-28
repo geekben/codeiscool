@@ -7,40 +7,21 @@ class Solution(object):
         """
         l1 = len(str1)
         l2 = len(str2)
-        ll = l1 + l2
         ret = ""
-        lm = ll+1
-        for i in xrange(1<<ll):
-            tr = ""
-            t1 = str1[:]
-            t2 = str2[:]
-            lt1 = l1
-            lt2 = l2
-            for j in xrange(ll):
-                if lt1 == 0:
-                    tr += t2
-                    lt2 = 0
-                elif lt2 == 0:
-                    tr += t1
-                    lt1 = 0
-                else:
-                    if t1[0] == t2[0]:
-                        tr += t1[0]
-                        t1 = t1[1:]
-                        t2 = t2[1:]
-                        lt1 -= 1
-                        lt2 -= 1
-                    elif (1 << j) & i == 0:
-                        tr += t1[0]
-                        t1 = t1[1:]
-                        lt1 -= 1
-                    else:
-                        tr += t2[0]
-                        t2 = t2[1:]
-                        lt2 -= 1
-                if lt1 == 0 and lt2 == 0:
-                    break
-            if len(tr) < lm:
-                lm = len(tr)
-                ret = tr
+        if l1 == 0:
+            return str2
+        if l2 == 0:
+            return str1
+        if str1[0] == str2[0]:
+            ret = str1[0] + \
+                self.shortestCommonSupersequence(str1[1:], str2[1:])
+        else:
+            t1 = str1[0] + \
+                self.shortestCommonSupersequence(str1[1:], str2)
+            t2 = str2[0] + \
+                self.shortestCommonSupersequence(str1, str2[1:])
+            if len(t1) <= len(t2):
+                ret = t1
+            else:
+                ret = t2
         return ret
