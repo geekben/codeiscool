@@ -189,7 +189,7 @@ static void __exit compact_zone_exit(void)
 module_init(compact_zone_init);
 module_exit(compact_zone_exit);
 
-MODULE_AUTHOR("Luo Ben <luoben.lb@alibaba-inc.com>");
+MODULE_AUTHOR("Luo Ben <bn0418@gmail.com>");
 MODULE_DESCRIPTION("Hotfix for compact_zone");
 MODULE_LICENSE("GPL");
 MODULE_VERSION("1.0.0");
